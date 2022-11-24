@@ -14,8 +14,8 @@ const Navbar = () => {
                         <li tabIndex={0}>
                             <a className="justify-between"> Parent </a>
                             <ul className="p-2">
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
+                                <a>Submenu 1</a>
+                                <a>Submenu 2</a>
                             </ul>
                         </li>
                         <li><a>Item 3</a></li>
@@ -26,10 +26,10 @@ const Navbar = () => {
             <div className="navbar-center hidden lg:flex items-center">
                 <ul className="menu menu-horizontal p-0">
                     <li tabIndex={0}>
-                        <li className='btn btn-ghost'>Phones</li>
+                        <Link className='btn btn-ghost'>Phones</Link>
                         <ul className="p-2">
-                            <li><a>Submenu 1</a></li>
-                            <li><a>Submenu 2</a></li>
+                            <a>Submenu 1</a>
+                            <a>Submenu 2</a>
                         </ul>
                     </li>
                     <li><Link className='btn btn-ghost'>Dashboard</Link></li>
