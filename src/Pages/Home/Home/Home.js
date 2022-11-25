@@ -9,8 +9,8 @@ const Home = () => {
             <div className='flex justify-center mb-32'>
                 <Banner></Banner>
             </div>
-            <ExtraSection></ExtraSection>
             <CategorySection></CategorySection>
+            <ExtraSection></ExtraSection>
         </div>
     );
 };

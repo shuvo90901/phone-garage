@@ -21,7 +21,7 @@ const Navbar = () => {
                         <li><a>Item 3</a></li>
                     </ul>
                 </div>
-                <Link className="btn btn-ghost normal-case md:text-3xl text-xl  text-green-600 font-bold">Phone Garage</Link>
+                <Link to='/' className="btn btn-ghost normal-case md:text-3xl text-xl  text-green-600 font-bold">Phone Garage</Link>
             </div>
             <div className="navbar-center hidden lg:flex items-center">
                 <ul className="menu menu-horizontal p-0">
@@ -33,10 +33,11 @@ const Navbar = () => {
                         </ul>
                     </li>
                     <li><Link className='btn btn-ghost'>Dashboard</Link></li>
+                    <li><Link to='/blog' className='btn btn-ghost'>Blog</Link></li>
                 </ul>
             </div>
             <div className="navbar-end px-10">
-                <button className="btn btn-outline btn-warning">Login</button>
+                <Link to='/login' className="btn btn-outline btn-warning">Login</Link>
             </div>
         </div>
     );
