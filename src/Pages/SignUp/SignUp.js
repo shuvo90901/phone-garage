@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
+    const [role, setRole] = useState('customer')
 
     const handleSignUp = data => {
         console.log(data)
@@ -16,16 +17,46 @@ const SignUp = () => {
                     displayName: data.name
                 }
                 updateUser(userInfo)
-                    .then(() => { })
+                    .then(() => {
+                        saveUser(data.name, data.email)
+                    })
                     .catch(err => console.log(err))
             })
             .catch(error => {
                 console.log(error)
             })
     }
+    const handleAccountType = type => {
+        setRole(type)
+    }
+
+    const saveUser = (name, email) => {
+        const user = { name, email, role };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log('save User', data)
+            })
+    }
+
+
+
     return (
         <div className="min-h-screen card  shadow-2xl lg:w-1/2 md:3/4 mx-auto">
             <h1 className="text-5xl font-bold text-center">Sign Up</h1>
+            <br />
+            <div className='flex justify-center items-center'>
+                <input type="radio" name="radio-2" className="radio radio-primary" onClick={() => handleAccountType('')} checked />
+                <label className='px-3'>Customer Account</label>
+                <input type="radio" name="radio-2" className="radio radio-primary" onClick={() => handleAccountType('seller')} />
+                <label className='px-3'>Seller Account</label>
+            </div>
             <form onSubmit={handleSubmit(handleSignUp)} className="card-body">
                 <div className="form-control">
                     <label className="label">

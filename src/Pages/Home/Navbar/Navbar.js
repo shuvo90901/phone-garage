@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaBeer, FaUser } from 'react-icons/fa';
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(err => console.log(err))
+    }
+
+    const { data: users = [] } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/users')
+            const data = await res.json();
+            return data;
+        }
+    })
+
+    const currentUser = users.find(us => us?.email === user?.email)
+
+
     return (
         <div className="navbar bg-base-100 my-5">
             <div className="navbar-start">
@@ -34,10 +56,47 @@ const Navbar = () => {
                     </li>
                     <li><Link className='btn btn-ghost'>Dashboard</Link></li>
                     <li><Link to='/blog' className='btn btn-ghost'>Blog</Link></li>
+
+                    {
+                        currentUser?.role === 'customer' ?
+                            <li><Link to='/myorders' className='btn btn-ghost'>My Orders</Link></li>
+                            : <></>
+                    }
+                    {
+                        currentUser?.role === 'seller' ?
+                            <li><Link to='/addproduct' className='btn btn-ghost'>Add A Product</Link></li>
+                            : <></>
+
+                    }
+
+                    {
+                        currentUser?.role === 'admin' ?
+                            <>
+                                <li><Link to='/allseller' className='btn btn-ghost'>All Seller</Link></li>
+                                <li><Link to='/allbuyers' className='btn btn-ghost'>All Buyers</Link></li>
+                            </>
+                            : <></>
+                    }
                 </ul>
             </div>
             <div className="navbar-end px-10">
-                <Link to='/login' className="btn btn-outline btn-warning">Login</Link>
+                <p className="text-xl">{user?.displayName}</p>
+                <div title={user?.displayName} className='mx-8'>
+                    {
+                        user?.photoURL ?
+                            <img src={user.photoURL} alt="" />
+                            :
+                            <FaUser className='text-2xl' />
+                    }
+                </div>
+                <div>
+                    {
+                        user ?
+                            <Link onClick={handleLogOut} className="btn btn-outline btn-warning">Sign Out</Link>
+                            :
+                            <Link to='/login' className="btn btn-outline btn-warning">Login</Link>
+                    }
+                </div>
             </div>
         </div>
     );

@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const logOut = () => {
-        return signOut();
+        return signOut(auth);
     }
 
     useEffect(() => {
