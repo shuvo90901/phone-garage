@@ -13,7 +13,7 @@ const CategorySection = () => {
         <div className='grid grid-cols-3 gap-5 text-center my-36'>
             {
                 categories.map(category =>
-                    <Link to={`/category/${category.categorie_id}`} className="card w-96 bg-base-600 shadow-xl">
+                    <Link to={`/category/${category.category_id}`} className="card w-96 bg-base-600 shadow-xl">
                         <img src={category.img} alt="Shoes" />
                         <div className="card-body">
                             <h2 className="text-3xl ">{category.category_name}</h2>

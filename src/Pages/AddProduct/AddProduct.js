@@ -1,12 +1,48 @@
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
+
     const handleAddProduct = data => {
-        console.log(data)
+        const product_name = data.productname;
+        const price = data.price;
+        const condition = data.condition;
+        const number = data.mobile;
+        const location = data.location;
+        const category_id = data.category;
+        const discription = data.discription;
+        const purchase_date = data.purchase;
+        const image = data.image;
+        const date = new Date();
+        const product = {
+            product_name, price, condition, number, location, category_id, discription, purchase_date, image, date
+        }
+
+        fetch('http://localhost:5000/products', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(product)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
     }
+
+    const { data: categories = [] } = useQuery({
+        queryKey: ['categories'],
+        queryFn: async () => {
+            const res = await fetch('categorie.json')
+            const data = await res.json();
+            return data;
+        }
+    })
 
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -71,10 +107,20 @@ const AddProduct = () => {
                             <label className="label">
                                 <span className="label-text">Product Category</span>
                             </label>
-                            <input type="text"
+                            <select
                                 {...register("category", {
                                     required: 'Product Category is required'
-                                })} placeholder="Enter the brand of this product" className="input input-bordered" />
+                                })}
+                                className="select input-bordered w-full ">
+                                {
+                                    categories.map(category =>
+                                        <option
+                                            key={category.category_id}
+                                            value={category.category_id}
+                                        >{category.category_name}</option>
+                                    )
+                                }
+                            </select>
                             {errors.category && <p>{errors.category?.message}</p>}
                         </div>
                     </div>
@@ -84,6 +130,7 @@ const AddProduct = () => {
                                 <span className="label-text">Discription</span>
                             </label>
                             <input type="text"
+
                                 {...register("discription", {
                                     required: 'Discription is required'
                                 })} placeholder="Enter the product Description" className="input input-bordered" />
@@ -99,6 +146,16 @@ const AddProduct = () => {
                                 })} placeholder="Enter Which that of Purchase" className="input input-bordered" />
                             {errors.discription && <p>{errors.discription?.message}</p>}
                         </div>
+                    </div>
+                    <div className="form-control w-1/2">
+                        <label className="label">
+                            <span className="label-text">Product Image</span>
+                        </label>
+                        <input type="text"
+                            {...register("image", {
+                                required: 'Image is required'
+                            })} placeholder="Enter the product image" className="input input-bordered" />
+                        {errors.image && <p>{errors.image?.message}</p>}
                     </div>
                     <div className="form-control mt-6">
                         <button className="btn btn-primary">Login</button>
