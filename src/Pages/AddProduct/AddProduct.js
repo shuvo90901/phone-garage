@@ -1,13 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { user } = useContext(AuthContext);
-
-
+    const [seller, setSeller] = useState({})
+    useEffect(() => {
+        fetch(`http://localhost:5000/seller/${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setSeller(data)
+            })
+    }, [user?.email])
     const handleAddProduct = data => {
         const product_name = data.productname;
         const price = data.price;
@@ -22,8 +28,9 @@ const AddProduct = () => {
         const seller_name = user?.displayName;
         const seller_email = user?.email;
         const original_price = data.original_price;
+        const seller_status = seller?.status;
         const product = {
-            product_name, price, condition, number, location, category_id, discription, purchase_date, image, date, seller_name, seller_email, original_price
+            product_name, price, condition, number, location, category_id, discription, purchase_date, image, date, seller_name, seller_email, original_price, seller_status
         }
 
         fetch('http://localhost:5000/products', {
@@ -47,6 +54,7 @@ const AddProduct = () => {
             return data;
         }
     })
+
 
     return (
         <div className="hero min-h-screen bg-base-200">
