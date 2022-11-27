@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { FaCheck } from 'react-icons/fa';
 import Table from './Table';
 
 const AllSeller = () => {
@@ -41,7 +42,10 @@ const AllSeller = () => {
                         {
                             sellers.map((seller, i) => <tr>
                                 <th>{i + 1}</th>
-                                <td>{seller.name}</td>
+                                <td className='flex items-center gap-3'>{seller.name}{
+                                    seller.status &&
+                                    <FaCheck className='text-blue-600' />
+                                }</td>
                                 <td>{seller.email}</td>
                                 <td>{
                                     seller?.status === 'verified' ?
