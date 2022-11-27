@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -5,9 +6,10 @@ const CategorySection = () => {
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        fetch('Categorie.json')
-            .then(res => res.json())
-            .then(data => setCategories(data))
+        axios.get('http://localhost:5000/categories')
+            .then(data => {
+                setCategories(data.data)
+            })
     }, [])
     return (
         <div className='grid grid-cols-3 gap-5 text-center my-36'>

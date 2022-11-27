@@ -5,6 +5,7 @@ import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { user } = useContext(AuthContext);
 
 
     const handleAddProduct = data => {
@@ -18,8 +19,11 @@ const AddProduct = () => {
         const purchase_date = data.purchase;
         const image = data.image;
         const date = new Date();
+        const seller_name = user?.displayName;
+        const seller_email = user?.email;
+        const original_price = data.original_price;
         const product = {
-            product_name, price, condition, number, location, category_id, discription, purchase_date, image, date
+            product_name, price, condition, number, location, category_id, discription, purchase_date, image, date, seller_name, seller_email, original_price
         }
 
         fetch('http://localhost:5000/products', {
@@ -147,15 +151,27 @@ const AddProduct = () => {
                             {errors.discription && <p>{errors.discription?.message}</p>}
                         </div>
                     </div>
-                    <div className="form-control w-1/2">
-                        <label className="label">
-                            <span className="label-text">Product Image</span>
-                        </label>
-                        <input type="text"
-                            {...register("image", {
-                                required: 'Image is required'
-                            })} placeholder="Enter the product image" className="input input-bordered" />
-                        {errors.image && <p>{errors.image?.message}</p>}
+                    <div className="md:flex gap-5">
+                        <div className="form-control w-1/2">
+                            <label className="label">
+                                <span className="label-text">Product Image</span>
+                            </label>
+                            <input type="text"
+                                {...register("image", {
+                                    required: 'Image is required'
+                                })} placeholder="Enter the product image" className="input input-bordered" />
+                            {errors.image && <p>{errors.image?.message}</p>}
+                        </div>
+                        <div className="form-control w-1/2">
+                            <label className="label">
+                                <span className="label-text">Original Price</span>
+                            </label>
+                            <input type="text"
+                                {...register("original_price", {
+                                    required: 'Original is required'
+                                })} placeholder="Enter the Original Price" className="input input-bordered" />
+                            {errors.original_price && <p>{errors.original_price?.message}</p>}
+                        </div>
                     </div>
                     <div className="form-control mt-6">
                         <button className="btn btn-primary">Login</button>
