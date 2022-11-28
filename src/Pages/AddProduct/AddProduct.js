@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import Loading from '../utilities/Loading';
 
 const AddProduct = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -51,7 +52,7 @@ const AddProduct = () => {
             })
     }
 
-    const { data: categories = [] } = useQuery({
+    const { data: categories = [], isLoading } = useQuery({
         queryKey: ['categories'],
         queryFn: async () => {
             const res = await fetch('categorie.json')
@@ -60,6 +61,9 @@ const AddProduct = () => {
         }
     })
 
+    if (isLoading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div className="hero min-h-screen bg-base-200">

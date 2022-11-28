@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import toast from 'react-hot-toast';
+import Loading from '../utilities/Loading';
 
 const AllBuyers = () => {
-    const { data: buyers = [], refetch } = useQuery({
+    const { data: buyers = [], refetch, isLoading } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/customer')
@@ -25,6 +26,10 @@ const AllBuyers = () => {
             })
     }
     console.log(buyers)
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div>
             <div className="overflow-x-auto">

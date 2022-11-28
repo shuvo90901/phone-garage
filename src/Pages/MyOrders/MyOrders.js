@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Loading from '../utilities/Loading';
 
 const MyOrders = () => {
-    const { data: bookings = [] } = useQuery({
+    const { data: bookings = [], isLoading } = useQuery({
         queryKey: ['bookings'],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/bookings`);
@@ -12,6 +13,10 @@ const MyOrders = () => {
         }
     })
     console.log(bookings)
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div>
             <div className="overflow-x-auto">

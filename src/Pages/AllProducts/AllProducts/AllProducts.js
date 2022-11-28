@@ -122,12 +122,6 @@ const AllProducts = () => {
                         </div>
                     </div>)
                 }
-                {/* {
-                    products.map(product => <Product
-                        key={product._id}
-                        product={product}
-                    ></Product>)
-                } */}
             </div>
         </div >
     );

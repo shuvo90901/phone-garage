@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { signIn } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = data => {
         console.log(data)
@@ -13,13 +16,15 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user)
+                navigate(from, { replace: true })
+
             })
             .catch(error => {
                 console.log(error)
             })
     }
     return (
-        <div className="min-h-screen card  shadow-2xl lg:w-1/2 md:3/4 mx-auto">
+        <div className=" card  shadow-2xl lg:w-1/2 md:3/4 mx-auto">
             <h1 className="text-5xl font-bold text-center">Log In</h1>
             <div className="card-body">
                 <form onSubmit={handleSubmit(handleLogin)}>
@@ -50,7 +55,10 @@ const Login = () => {
                     <input className='btn btn-acent w-full mt-4' value='Login' type="submit" />
                 </form>
                 <p>If you are new in Phone Garage ? <Link className='font-bold' to='/signup'>Please Register.</Link></p>
+                <div className="divider">OR</div>
+                <button className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
             </div>
+
         </div>
     );
 };

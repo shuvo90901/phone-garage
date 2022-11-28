@@ -2,10 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { FaCheck } from 'react-icons/fa';
+import Loading from '../utilities/Loading';
 import Table from './Table';
 
 const AllSeller = () => {
-    const { data: sellers = [], refetch } = useQuery({
+    const { data: sellers = [], refetch, isLoading } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/seller')
@@ -38,6 +39,10 @@ const AllSeller = () => {
                     toast.success(`Seller ${seller.name} deleted successfully`)
                 }
             })
+    }
+
+    if (isLoading) {
+        return <Loading></Loading>
     }
     return (
         <div>

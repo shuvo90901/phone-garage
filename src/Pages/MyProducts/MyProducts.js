@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import Loading from '../utilities/Loading';
 
 const MyProducts = () => {
     const { user } = useContext(AuthContext);
-    const { data: ALLProducts = [], refetch } = useQuery({
+    const { data: ALLProducts = [], refetch, isLoading } = useQuery({
         queryKey: ['AllProducts'],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/products`);
@@ -15,7 +17,22 @@ const MyProducts = () => {
     const sellerProducts = ALLProducts.filter(product => product.seller_email === user?.email)
 
     const handleAddAdvertise = product => {
-        console.log(product)
+        fetch('http://localhost:5000/advertises', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(product)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                toast.success('successfully added in advertised item')
+            })
+    }
+
+    if (isLoading) {
+        return <Loading></Loading>
     }
     return (
         <div className='min-h-screen'>
@@ -34,7 +51,7 @@ const MyProducts = () => {
                             <p>
                                 Date of Post : {product.date.slice(0, 10)}
                             </p>
-                            {product.product_status === 'sold' ?
+                            {product.paid ?
                                 <button className="btn btn-success">
                                     Sold
                                 </button>

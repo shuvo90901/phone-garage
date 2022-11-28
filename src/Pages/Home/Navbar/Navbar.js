@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
+import Loading from '../../utilities/Loading';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -12,7 +13,7 @@ const Navbar = () => {
             .catch(err => console.log(err))
     }
 
-    const { data: users = [] } = useQuery({
+    const { data: users = [], isLoading } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/users')
@@ -23,7 +24,9 @@ const Navbar = () => {
 
     const currentUser = users.find(us => us?.email === user?.email)
 
-
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div className="navbar bg-base-100 my-5">
             <div className="navbar-start">

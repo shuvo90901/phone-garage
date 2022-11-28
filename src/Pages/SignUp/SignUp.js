@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser, updateUser } = useContext(AuthContext);
+    const { createUser, updateUser, providerLogin, googleProvider } = useContext(AuthContext);
     const [role, setRole] = useState('customer')
+    const navigate = useNavigate();
 
     const handleSignUp = data => {
         console.log(data)
@@ -19,6 +21,7 @@ const SignUp = () => {
                 updateUser(userInfo)
                     .then(() => {
                         saveUser(data.name, data.email)
+                        navigate('/')
                     })
                     .catch(err => console.log(err))
             })
@@ -45,10 +48,18 @@ const SignUp = () => {
             })
     }
 
-
+    const handleGoogleSignIn = () => {
+        providerLogin(googleProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+                saveUser(user?.displayName, user?.email)
+            })
+            .catch(error => console.error(error))
+    }
 
     return (
-        <div className="min-h-screen card  shadow-2xl lg:w-1/2 md:3/4 mx-auto">
+        <div className=" card  shadow-2xl lg:w-1/2 md:3/4 mx-auto my-10">
             <h1 className="text-5xl font-bold text-center">Sign Up</h1>
             <br />
             <div className='flex justify-center items-center'>
@@ -93,8 +104,11 @@ const SignUp = () => {
                         placeholder="Enter Your Password" className="input input-bordered" />
                     {errors.password && <p>{errors.password?.message}</p>}
                 </div>
-                <input className='btn btn-acent w-full mt-4' value='Login' type="submit" />
+                <input className='btn btn-acent w-full mt-4' value='SignUp' type="submit" />
             </form>
+            <p>Already have an account ? <Link className='font-bold' to='/login'>Please login</Link></p>
+            <div className="divider">OR</div>
+            <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
         </div>
     );
 };
