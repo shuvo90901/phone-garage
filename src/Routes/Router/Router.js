@@ -10,6 +10,7 @@ import Login from "../../Pages/Login/Login";
 import MyOrders from "../../Pages/MyOrders/MyOrders";
 import Payment from "../../Pages/MyOrders/Payment/Payment";
 import MyProducts from "../../Pages/MyProducts/MyProducts";
+import NotFoundPage from "../../Pages/NotFoundPage/NotFoundPage";
 import SignUp from "../../Pages/SignUp/SignUp";
 
 export const router = createBrowserRouter([
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
             {
                 path: '/blog',
                 element: <Blog></Blog>
+            },
+            {
+                path: '*',
+                element: <NotFoundPage></NotFoundPage>
             }
         ]
     }
