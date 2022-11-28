@@ -4,6 +4,7 @@ import { FaUser } from 'react-icons/fa';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../../utilities/Loading';
+import logo from '../../../images/download.png'
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -16,7 +17,7 @@ const Navbar = () => {
     const { data: users = [], isLoading } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users')
+            const res = await fetch('https://phone-garage-server-bay.vercel.app/users')
             const data = await res.json();
             return data;
         }
@@ -57,12 +58,16 @@ const Navbar = () => {
                                 <>
                                     <li><Link to='/allseller' className='btn btn-ghost'>All Seller</Link></li>
                                     <li><Link to='/allbuyers' className='btn btn-ghost'>All Buyers</Link></li>
+                                    <li><Link to='/reported' className='btn btn-ghost'>Reported Items</Link></li>
                                 </>
                                 : <></>
                         }
                     </ul>
                 </div>
-                <Link to='/' className="btn btn-ghost normal-case md:text-3xl text-xl  text-green-600 font-bold">Phone Garage</Link>
+                <div className='flex items-center'>
+                    <img className='w-12' src={logo} alt="" />
+                    <Link to='/' className="btn btn-ghost normal-case md:text-3xl text-xl  text-green-600 font-bold">Phone Garage</Link>
+                </div>
             </div>
             <div className="navbar-center hidden lg:flex items-center">
                 <ul className="menu menu-horizontal p-0">
@@ -88,6 +93,7 @@ const Navbar = () => {
                             <>
                                 <li><Link to='/allseller' className='btn btn-ghost'>All Seller</Link></li>
                                 <li><Link to='/allbuyers' className='btn btn-ghost'>All Buyers</Link></li>
+                                <li><Link to='/reported' className='btn btn-ghost'>Reported Items</Link></li>
                             </>
                             : <></>
                     }

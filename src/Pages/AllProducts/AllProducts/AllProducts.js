@@ -18,7 +18,7 @@ const AllProducts = () => {
         }
         console.log(bookingInformation)
 
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://phone-garage-server-bay.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -31,6 +31,21 @@ const AllProducts = () => {
                 toast.success('Item is booked successfully')
             })
     }
+    const handleReportItem = (product) => {
+        const report = { ...product, reporter_email: user?.email }
+        fetch('https://phone-garage-server-bay.vercel.app/reported', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(report)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                toast.success('Reported Successfully')
+            })
+    }
     return (
         <div className='min-h-screen mt-20 mx-8'>
             <div className='lg:grid grid-cols-2 gap-5 '>
@@ -39,6 +54,7 @@ const AllProducts = () => {
                         <div className="card card-side ">
                             <figure><img className='w-72' src={product.image} alt="Movie" /></figure>
                             <div className="card-body text-left font-bold">
+
                                 <h3 className="text-2xl">{product.product_name}</h3>
                                 <div className='lg:flex gap-2'>
                                     <p>Resale Price : ${product.price}</p>
@@ -47,6 +63,7 @@ const AllProducts = () => {
                                 <p>Product Condition : {product.condition}</p>
                                 <p>Purchase Year : {product.purchase_date}</p>
                                 <p>Seller Location : {product.location}</p>
+                                <button onClick={() => handleReportItem(product)} className="btn btn-sm btn-red">Report to Admin</button>
                             </div>
                         </div>
                         <div className="card-body text-left">

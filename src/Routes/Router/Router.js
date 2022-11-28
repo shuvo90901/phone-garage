@@ -11,7 +11,9 @@ import MyOrders from "../../Pages/MyOrders/MyOrders";
 import Payment from "../../Pages/MyOrders/Payment/Payment";
 import MyProducts from "../../Pages/MyProducts/MyProducts";
 import NotFoundPage from "../../Pages/NotFoundPage/NotFoundPage";
+import ReportedItems from "../../Pages/ReportedItems/ReportedItems";
 import SignUp from "../../Pages/SignUp/SignUp";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -36,8 +38,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/category/:id',
-                element: <AllProducts></AllProducts>,
-                loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
+                element: <PrivateRoute><AllProducts></AllProducts></PrivateRoute>,
+                loader: ({ params }) => fetch(`https://phone-garage-server-bay.vercel.app/products/${params.id}`)
             },
             {
                 path: '/allseller',
@@ -58,7 +60,7 @@ export const router = createBrowserRouter([
             {
                 path: '/myorders/payment/:id',
                 element: <Payment></Payment>,
-                loader: async ({ params }) => fetch(`http://localhost:5000/bookings/${params.id}`)
+                loader: async ({ params }) => fetch(`https://phone-garage-server-bay.vercel.app/bookings/${params.id}`)
             },
             {
                 path: '/blog',
@@ -67,6 +69,10 @@ export const router = createBrowserRouter([
             {
                 path: '*',
                 element: <NotFoundPage></NotFoundPage>
+            },
+            {
+                path: 'reported',
+                element: <ReportedItems></ReportedItems>
             }
         ]
     }

@@ -7,7 +7,7 @@
 
 //     const [seller, setSeller] = useState({})
 //     useEffect(() => {
-//         fetch(`http://localhost:5000/seller/${seller_email}`)
+//         fetch(`https://phone-garage-server-bay.vercel.app/seller/${seller_email}`)
 //             .then(res => res.json())
 //             .then(data => {
 //                 setSeller(data)

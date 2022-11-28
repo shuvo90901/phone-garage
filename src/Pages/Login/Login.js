@@ -26,7 +26,7 @@ const Login = () => {
     const role = 'customer'
     const saveUser = (name, email) => {
         const user = { name, email, role };
-        fetch('http://localhost:5000/users', {
+        fetch('https://phone-garage-server-bay.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

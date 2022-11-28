@@ -6,7 +6,7 @@ const CategorySection = () => {
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:5000/categories')
+        axios.get('https://phone-garage-server-bay.vercel.app/categories')
             .then(data => {
                 setCategories(data.data)
             })

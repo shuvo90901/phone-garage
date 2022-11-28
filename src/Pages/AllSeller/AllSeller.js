@@ -1,22 +1,27 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { FaCheck } from 'react-icons/fa';
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import useAdmin from '../../hooks/useAdmin';
 import Loading from '../utilities/Loading';
 import Table from './Table';
 
 const AllSeller = () => {
+    const { user } = useContext(AuthContext)
+    const [isAdmin] = useAdmin(user?.email);
+
     const { data: sellers = [], refetch, isLoading } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/seller')
+            const res = await fetch('https://phone-garage-server-bay.vercel.app/seller')
             const data = await res.json();
             return data;
         }
     })
 
     const handleMakeVerify = id => {
-        fetch(`http://localhost:5000/seller/verify/${id}`, {
+        fetch(`https://phone-garage-server-bay.vercel.app/seller/verify/${id}`, {
             method: 'PUT'
         })
             .then(res => res.json())
@@ -29,7 +34,7 @@ const AllSeller = () => {
     }
 
     const handleDeleteSeller = seller => {
-        fetch(`http://localhost:5000/users/${seller._id}`, {
+        fetch(`https://phone-garage-server-bay.vercel.app/users/${seller._id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

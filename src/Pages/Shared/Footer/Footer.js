@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../../images/download.png'
 
 const Footer = () => {
     return (
         <footer className="footer p-10 bg-green-300 text-base-content">
             <div className='my-auto mx-auto'>
+                <img className='w-1/4' src={logo} alt="" />
                 <h2 className="text-4xl font-bold text-green-900"><i>Phone Garage</i></h2>
             </div>
             <div>
