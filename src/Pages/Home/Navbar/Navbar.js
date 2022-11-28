@@ -86,7 +86,7 @@ const Navbar = () => {
                 <div title={user?.displayName} className='mx-8'>
                     {
                         user?.photoURL ?
-                            <img src={user.photoURL} alt="" />
+                            <img className='w-10 rounded-full' src={user.photoURL} alt="" />
                             :
                             <FaUser className='text-2xl' />
                     }

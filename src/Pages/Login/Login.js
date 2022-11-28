@@ -5,7 +5,7 @@ import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { signIn } = useContext(AuthContext);
+    const { signIn, providerLogin, googleProvider } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
@@ -22,6 +22,31 @@ const Login = () => {
             .catch(error => {
                 console.log(error)
             })
+    }
+    const role = 'customer'
+    const saveUser = (name, email) => {
+        const user = { name, email, role };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log('save User', data)
+            })
+    }
+
+    const handleGoogleSignIn = () => {
+        providerLogin(googleProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+                saveUser(user?.displayName, user?.email)
+            })
+            .catch(error => console.error(error))
     }
     return (
         <div className=" card  shadow-2xl lg:w-1/2 md:3/4 mx-auto">
@@ -56,7 +81,7 @@ const Login = () => {
                 </form>
                 <p>If you are new in Phone Garage ? <Link className='font-bold' to='/signup'>Please Register.</Link></p>
                 <div className="divider">OR</div>
-                <button className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+                <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
             </div>
 
         </div>
