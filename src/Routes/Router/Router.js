@@ -6,6 +6,8 @@ import AllProducts from "../../Pages/AllProducts/AllProducts/AllProducts";
 import AllSeller from "../../Pages/AllSeller/AllSeller";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
+import MyOrders from "../../Pages/MyOrders/MyOrders";
+import MyProducts from "../../Pages/MyProducts/MyProducts";
 import SignUp from "../../Pages/SignUp/SignUp";
 
 export const router = createBrowserRouter([
@@ -41,6 +43,14 @@ export const router = createBrowserRouter([
             {
                 path: 'allbuyers',
                 element: <AllBuyers></AllBuyers>
+            },
+            {
+                path: '/myproducts',
+                element: <MyProducts></MyProducts>
+            },
+            {
+                path: '/myorders',
+                element: <MyOrders></MyOrders>
             }
         ]
     }

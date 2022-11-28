@@ -1,12 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { user } = useContext(AuthContext);
     const [seller, setSeller] = useState({})
+    const navigate = useNavigate()
     useEffect(() => {
         fetch(`http://localhost:5000/seller/${user?.email}`)
             .then(res => res.json())
@@ -43,6 +46,8 @@ const AddProduct = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+                toast.success('Product added successfully');
+                navigate('/myproducts')
             })
     }
 

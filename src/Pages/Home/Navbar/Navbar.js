@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBeer, FaUser } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 
@@ -36,8 +36,6 @@ const Navbar = () => {
                         <li tabIndex={0}>
                             <a className="justify-between"> Parent </a>
                             <ul className="p-2">
-                                <a>Submenu 1</a>
-                                <a>Submenu 2</a>
                             </ul>
                         </li>
                         <li><a>Item 3</a></li>
@@ -50,8 +48,6 @@ const Navbar = () => {
                     <li tabIndex={0}>
                         <Link className='btn btn-ghost'>Phones</Link>
                         <ul className="p-2">
-                            <a>Submenu 1</a>
-                            <a>Submenu 2</a>
                         </ul>
                     </li>
                     <li><Link className='btn btn-ghost'>Dashboard</Link></li>
@@ -64,7 +60,10 @@ const Navbar = () => {
                     }
                     {
                         currentUser?.role === 'seller' ?
-                            <li><Link to='/addproduct' className='btn btn-ghost'>Add A Product</Link></li>
+                            <>
+                                <li><Link to='/addproduct' className='btn btn-ghost'>Add A Product</Link></li>
+                                <li><Link to='/myproducts' className='btn btn-ghost'>My Products</Link></li>
+                            </>
                             : <></>
 
                     }

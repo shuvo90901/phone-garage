@@ -1,14 +1,35 @@
 import React, { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
 import { FaCheck } from 'react-icons/fa';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const AllProducts = () => {
     const products = useLoaderData();
-    const [modalData, setModalData] = useState(null)
+    const [modalData, setModalData] = useState(null);
     const { user } = useContext(AuthContext);
+    const handleBookingProduct = event => {
+        event.preventDefault();
+        const buyer_number = event.target.buyer_number.value;
+        const buyer_location = event.target.buyer_location.value;
+        const bookingInformation = {
+            ...modalData, buyer_number, buyer_location
+        }
+        console.log(bookingInformation)
 
-    console.log(modalData)
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(bookingInformation)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                toast.success('Item is booked successfully')
+            })
+    }
     return (
         <div className='min-h-screen mt-20 mx-8'>
             <div className='lg:grid grid-cols-2 gap-5 '>
@@ -67,29 +88,33 @@ const AllProducts = () => {
                                         <label className="label">
                                             <span className="label-text">Product Name</span>
                                         </label>
-                                        <input defaultValue={product?.product_name} disabled type="text" className="input input-bordered" />
+                                        <input defaultValue={modalData?.product_name} disabled type="text" className="input input-bordered" />
                                     </div>
                                     <div className="form-control">
                                         <label className="label">
                                             <span className="label-text">Price</span>
                                         </label>
-                                        <input defaultValue={product?.price} disabled type="text" className="input input-bordered" />
+                                        <input defaultValue={modalData?.price} disabled type="text" className="input input-bordered" />
                                     </div>
                                 </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">Your Phone Number</span>
-                                    </label>
-                                    <input type="text" name='buyer_number' placeholder='Enter Your Phone Number' className="input input-bordered" />
-                                </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">Meeting Location</span>
-                                    </label>
-                                    <input type="text" name='buyer_location' placeholder='Enter Location Where Meet You' className="input input-bordered" />
-                                </div>
+                                <form onSubmit={handleBookingProduct}>
+                                    <div className="form-control">
+                                        <label className="label">
+                                            <span className="label-text">Your Phone Number</span>
+                                        </label>
+                                        <input type="text" name='buyer_number' placeholder='Enter Your Phone Number' className="input input-bordered" />
+                                    </div>
+                                    <div className="form-control">
+                                        <label className="label">
+                                            <span className="label-text">Meeting Location</span>
+                                        </label>
+                                        <input type="text" name='buyer_location' placeholder='Enter Location Where Meet You' className="input input-bordered" />
+                                    </div>
+                                    <div className='flex justify-end mt-2'>
+                                        <button className='btn btn-success btn-sm'>Submit</button>
+                                    </div>
+                                </form>
                                 <div className="modal-action">
-                                    <button className='btn btn-success btn-sm'>Submit</button>
                                     <label htmlFor="my-modal" className="btn btn-sm btn-warning">Close!</label>
                                 </div>
                             </div>
@@ -103,7 +128,7 @@ const AllProducts = () => {
                     ></Product>)
                 } */}
             </div>
-        </div>
+        </div >
     );
 };
 
