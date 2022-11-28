@@ -7,6 +7,7 @@ import AllSeller from "../../Pages/AllSeller/AllSeller";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import MyOrders from "../../Pages/MyOrders/MyOrders";
+import Payment from "../../Pages/MyOrders/Payment/Payment";
 import MyProducts from "../../Pages/MyProducts/MyProducts";
 import SignUp from "../../Pages/SignUp/SignUp";
 
@@ -51,6 +52,11 @@ export const router = createBrowserRouter([
             {
                 path: '/myorders',
                 element: <MyOrders></MyOrders>
+            },
+            {
+                path: '/myorders/payment/:id',
+                element: <Payment></Payment>,
+                loader: async ({ params }) => fetch(`http://localhost:5000/bookings/${params.id}`)
             }
         ]
     }

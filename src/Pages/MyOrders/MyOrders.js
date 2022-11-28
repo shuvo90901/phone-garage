@@ -34,7 +34,7 @@ const MyOrders = () => {
                                 <td>$ {booking?.price}</td>
                                 <td>
                                     {
-                                        !booking.paid && <Link to={`/myorders/payment/${booking._id}`}>
+                                        !booking.paid && <Link to={`/myorders/payment/${booking.modal_id}`}>
                                             <button className="btn btn-primary btn-sm">Pay</button>
                                         </Link>
                                     }

@@ -13,7 +13,8 @@ const AllProducts = () => {
         const buyer_number = event.target.buyer_number.value;
         const buyer_location = event.target.buyer_location.value;
         const bookingInformation = {
-            ...modalData, buyer_number, buyer_location
+            ...modalData, buyer_number, buyer_location,
+            modal_id: modalData._id
         }
         console.log(bookingInformation)
 
@@ -111,7 +112,7 @@ const AllProducts = () => {
                                         <input type="text" name='buyer_location' placeholder='Enter Location Where Meet You' className="input input-bordered" />
                                     </div>
                                     <div className='flex justify-end mt-2'>
-                                        <button className='btn btn-success btn-sm'>Submit</button>
+                                        <button htmlFor="my-modal" className='btn btn-success btn-sm'>Submit</button>
                                     </div>
                                 </form>
                                 <div className="modal-action">
@@ -133,23 +134,3 @@ const AllProducts = () => {
 };
 
 export default AllProducts;
-{/* <div className="card-body">
-    <div className="form-control">
-        <label className="label">
-            <span className="label-text">Email</span>
-        </label>
-        <input type="text" placeholder="email" className="input input-bordered" />
-    </div>
-    <div className="form-control">
-        <label className="label">
-            <span className="label-text">Password</span>
-        </label>
-        <input type="text" placeholder="password" className="input input-bordered" />
-        <label className="label">
-            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-        </label>
-    </div>
-    <div className="form-control mt-6">
-        <button className="btn btn-primary">Login</button>
-    </div>
-</div> */}
