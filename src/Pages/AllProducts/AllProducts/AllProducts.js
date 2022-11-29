@@ -14,11 +14,12 @@ const AllProducts = () => {
         const buyer_location = event.target.buyer_location.value;
         const bookingInformation = {
             ...modalData, buyer_number, buyer_location,
-            modal_id: modalData._id
+            modal_id: modalData._id,
+            email: user?.email
         }
         console.log(bookingInformation)
 
-        fetch('https://phone-garage-server-bay.vercel.app/bookings', {
+        fetch('http://localhost:5000/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -33,7 +34,7 @@ const AllProducts = () => {
     }
     const handleReportItem = (product) => {
         const report = { ...product, reporter_email: user?.email }
-        fetch('https://phone-garage-server-bay.vercel.app/reported', {
+        fetch('http://localhost:5000/reported', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -3,8 +3,8 @@ import img from '../../../images/secondhand.jpg'
 
 const ExtraSection = () => {
     return (
-        <div className='flex justify-evenly items-center my-52'>
-            <div className='w-1/3'>
+        <div className='md:flex justify-evenly items-center my-52'>
+            <div className='md:w-1/2 lg:w-1/3'>
                 <img className='rounded-lg' src={img} alt="" />
             </div>
             <div>

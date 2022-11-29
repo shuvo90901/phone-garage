@@ -6,7 +6,7 @@ const ReportedItems = () => {
     const { data: reportedItem = [], refetch } = useQuery({
         queryKey: ['reportedItem'],
         queryFn: async () => {
-            const res = await fetch('https://phone-garage-server-bay.vercel.app/reported');
+            const res = await fetch('http://localhost:5000/reported');
             const data = await res.json();
             return data;
         }
@@ -14,7 +14,7 @@ const ReportedItems = () => {
     console.log(reportedItem)
 
     const handleDeleteReport = id => {
-        fetch(`https://phone-garage-server-bay.vercel.app/users/${id}`, {
+        fetch(`http://localhost:5000/users/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

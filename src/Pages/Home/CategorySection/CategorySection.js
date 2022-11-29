@@ -6,13 +6,13 @@ const CategorySection = () => {
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        axios.get('https://phone-garage-server-bay.vercel.app/categories')
+        axios.get('http://localhost:5000/categories')
             .then(data => {
                 setCategories(data.data)
             })
     }, [])
     return (
-        <div className='grid grid-cols-3 gap-5 text-center my-36'>
+        <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-5 text-center my-36'>
             {
                 categories.map(category =>
                     <Link to={`/category/${category.category_id}`} className="card w-96 bg-base-600 shadow-xl">

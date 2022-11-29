@@ -10,17 +10,16 @@ const CheckoutForm = ({ booking }) => {
     const [clientSecret, setClientSecret] = useState("");
     const stripe = useStripe();
     const elements = useElements();
-    const { price, _id } = booking;
+    const { price, modal_id } = booking;
     const { user } = useContext(AuthContext)
     const email = user?.email
 
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("https://doctors-portal-server-nine-phi.vercel.app/create-payment-intent", {
+        fetch("http://localhost:5000/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                auhtorization: `bearer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify({ price }),
         })
@@ -76,14 +75,13 @@ const CheckoutForm = ({ booking }) => {
                 price,
                 transactionId: paymentIntent.id,
                 email,
-                bookingId: _id
+                bookingId: modal_id
             }
 
-            fetch('https://doctors-portal-server-nine-phi.vercel.app/payments', {
+            fetch('http://localhost:5000/payments', {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
-                    auhtorization: `bearer ${localStorage.getItem('accessToken')}`
                 },
                 body: JSON.stringify(payment)
             })

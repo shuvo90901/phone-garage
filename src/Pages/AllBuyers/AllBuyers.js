@@ -7,14 +7,14 @@ const AllBuyers = () => {
     const { data: buyers = [], refetch, isLoading } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
-            const res = await fetch('https://phone-garage-server-bay.vercel.app/customer')
+            const res = await fetch('http://localhost:5000/customer')
             const data = await res.json();
             return data;
         }
     })
 
     const handleDeleteBuyer = buyer => {
-        fetch(`https://phone-garage-server-bay.vercel.app/users/${buyer._id}`, {
+        fetch(`http://localhost:5000/users/${buyer._id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

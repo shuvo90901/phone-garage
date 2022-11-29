@@ -1,17 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 import Loading from '../utilities/Loading';
 
 const MyOrders = () => {
+    const { user } = useContext(AuthContext);
     const { data: bookings = [], isLoading } = useQuery({
         queryKey: ['bookings'],
         queryFn: async () => {
-            const res = await fetch(`https://phone-garage-server-bay.vercel.app/bookings`);
+            const res = await fetch(`http://localhost:5000/bookings/${user?.email}`);
             const data = await res.json();
             return data;
         }
     })
+
     console.log(bookings)
 
     if (isLoading) {
@@ -38,15 +41,13 @@ const MyOrders = () => {
                                 <td>{booking?.product_name}</td>
                                 <td>$ {booking?.price}</td>
                                 <td>
+
                                     {
-                                        !booking.paid && <Link to={`/myorders/payment/${booking.modal_id}`}>
-                                            <button className="btn btn-primary btn-sm">Pay</button>
-                                        </Link>
+                                        booking.price && !booking.paid && <Link to={`/myorders/payment/${booking._id}`}>
+                                            <button className="btn btn-primary btn-sm">Pay</button></Link>
                                     }
                                     {
-                                        booking.paid && <span className='text-primary'>
-                                            Paid
-                                        </span>
+                                        booking.price && booking.paid && <span className="text-primary">Paid</span>
                                     }
                                 </td>
                             </tr>)

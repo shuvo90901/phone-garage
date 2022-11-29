@@ -35,7 +35,7 @@ const SignUp = () => {
 
     const saveUser = (name, email) => {
         const user = { name, email, role };
-        fetch('https://phone-garage-server-bay.vercel.app/users', {
+        fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -9,7 +9,7 @@ const MyProducts = () => {
     const { data: ALLProducts = [], refetch, isLoading } = useQuery({
         queryKey: ['AllProducts'],
         queryFn: async () => {
-            const res = await fetch(`https://phone-garage-server-bay.vercel.app/products`);
+            const res = await fetch(`http://localhost:5000/products`);
             const data = await res.json();
             return data;
         }
@@ -17,7 +17,7 @@ const MyProducts = () => {
     const sellerProducts = ALLProducts.filter(product => product.seller_email === user?.email)
 
     const handleAddAdvertise = product => {
-        fetch('https://phone-garage-server-bay.vercel.app/advertises', {
+        fetch('http://localhost:5000/advertises', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -36,7 +36,7 @@ const MyProducts = () => {
     }
     return (
         <div className='min-h-screen'>
-            <div className='grid grid-cols-2'>
+            <div className='md:grid grid-cols-2'>
                 {
                     sellerProducts.map(product => <div className="card w-96 bg-base-100 shadow-xl mx-auto">
                         <figure><img src={product.image} alt="Shoes" /></figure>

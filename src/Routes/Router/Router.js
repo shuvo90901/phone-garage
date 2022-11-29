@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
             {
                 path: '/category/:id',
                 element: <PrivateRoute><AllProducts></AllProducts></PrivateRoute>,
-                loader: ({ params }) => fetch(`https://phone-garage-server-bay.vercel.app/products/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
             },
             {
                 path: '/allseller',
@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
             {
                 path: '/myorders/payment/:id',
                 element: <Payment></Payment>,
-                loader: async ({ params }) => fetch(`https://phone-garage-server-bay.vercel.app/bookings/${params.id}`)
+                loader: async ({ params }) => fetch(`http://localhost:5000/bookings/${params.id}`)
             },
             {
                 path: '/blog',

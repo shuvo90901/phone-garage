@@ -12,7 +12,7 @@ const AddProduct = () => {
     const [seller, setSeller] = useState({})
     const navigate = useNavigate()
     useEffect(() => {
-        fetch(`https://phone-garage-server-bay.vercel.app/seller/${user?.email}`)
+        fetch(`http://localhost:5000/seller/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 setSeller(data)
@@ -37,7 +37,7 @@ const AddProduct = () => {
             product_name, price, condition, number, location, category_id, discription, purchase_date, image, date, seller_name, seller_email, original_price, seller_status
         }
 
-        fetch('https://phone-garage-server-bay.vercel.app/products', {
+        fetch('http://localhost:5000/products', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
