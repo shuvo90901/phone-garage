@@ -14,14 +14,14 @@ const AllSeller = () => {
     const { data: sellers = [], refetch, isLoading } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/seller')
+            const res = await fetch('https://phone-garage-server-bay.vercel.app/seller')
             const data = await res.json();
             return data;
         }
     })
 
     const handleMakeVerify = id => {
-        fetch(`http://localhost:5000/seller/verify/${id}`, {
+        fetch(`https://phone-garage-server-bay.vercel.app/seller/verify/${id}`, {
             method: 'PUT'
         })
             .then(res => res.json())
@@ -34,7 +34,7 @@ const AllSeller = () => {
     }
 
     const handleDeleteSeller = seller => {
-        fetch(`http://localhost:5000/users/${seller._id}`, {
+        fetch(`https://phone-garage-server-bay.vercel.app/users/${seller._id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

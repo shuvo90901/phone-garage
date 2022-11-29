@@ -9,7 +9,7 @@ const MyProducts = () => {
     const { data: ALLProducts = [], refetch, isLoading } = useQuery({
         queryKey: ['AllProducts'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/products`);
+            const res = await fetch(`https://phone-garage-server-bay.vercel.app/products`);
             const data = await res.json();
             return data;
         }
@@ -17,7 +17,7 @@ const MyProducts = () => {
     const sellerProducts = ALLProducts.filter(product => product.seller_email === user?.email)
 
     const handleAddAdvertise = product => {
-        fetch('http://localhost:5000/advertises', {
+        fetch('https://phone-garage-server-bay.vercel.app/advertises', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

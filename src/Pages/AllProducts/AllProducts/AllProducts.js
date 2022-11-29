@@ -19,7 +19,7 @@ const AllProducts = () => {
         }
         console.log(bookingInformation)
 
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://phone-garage-server-bay.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -34,7 +34,7 @@ const AllProducts = () => {
     }
     const handleReportItem = (product) => {
         const report = { ...product, reporter_email: user?.email }
-        fetch('http://localhost:5000/reported', {
+        fetch('https://phone-garage-server-bay.vercel.app/reported', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
